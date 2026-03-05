@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Staying Ahead | Queer Community</title>
+    <!-- Added Playfair Display for headings and Inter for body text -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #141414;
+            --border-color: #262626;
+            --input-border: #333333;
+            --accent-color: #ccff00;
+            /* Neon green from image */
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* background texture */
+        body:before {
+            content: "";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+        }
+
+        .logo-nav {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-btn {
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color) !important;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-color);
+            color: #000 !important;
+        }
+
+        /* container */
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        /* badge */
+        .badge {
+            background: transparent;
+            color: var(--accent-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(204, 255, 0, 0.3);
+        }
+
+        /* heading */
+        h1.main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        h2.sub-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .description {
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: auto;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* form card */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+            text-align: left;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            background: transparent;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            transition: 0.2s ease;
+            appearance: none;
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(204, 255, 0, 0.02);
+        }
+
+        /* Dropdown options theme match */
+        option {
+            background: var(--card-bg);
+            color: var(--text-main);
+        }
+
+        /* Custom select arrow */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 10px;
+            color: #666;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Social Proof inside card */
+        .social-proof {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0 15px 0;
+        }
+
+        .avatars {
+            display: flex;
+        }
+
+        .avatars img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            margin-left: -8px;
+            border: 2px solid var(--card-bg);
+        }
+
+        .social-proof span {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* glow button */
+        .btn {
+            width: 100%;
+            background: var(--accent-color);
+            border: none;
+            padding: 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #444;
+            color: #888;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Secure footer note */
+        .secure-note {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Features Section */
+        .section {
+            margin-top: 100px;
+            text-align: left;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section h2.serif-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Pricing */
+        .pricing-section {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .price {
+            font-size: 42px;
+            margin-top: 10px;
+            color: var(--accent-color);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-bottom: 40px;
+            color: #555;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            h1.main-title {
+                font-size: 42px;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links a.text-link {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo-nav">Staying Ahead</div>
+        <div class="nav-links">
+            <a href="#" class="text-link">Newsletter</a>
+            <a href="#form-section" class="nav-btn">Join Community &rarr;</a>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero Section -->
+        <div class="badge">Private Telegram Community</div>
+
+        <h1 class="main-title">Staying Ahead | Queer Community</h1>
+
+        <p class="description">
+            Skip the noise. Get the signal. A secure and anonymous space for LGBTQ+ professionals from Mumbai, Pune,
+            Bangalore, Noida & Delhi to connect and grow.
+        </p>
+
+        <!-- FORM CARD -->
+        <div class="card" id="form-section">
+            <form id="joinForm">
+                <div class="input-group">
+                    <input type="text" name="Nickname" placeholder="Your Nickname (optional)">
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="email" name="Email" placeholder="Email address *" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="telegram" name="Telegram" placeholder="Telegram Username *" required>
+                </div>
+
+                <div class="input-group select-wrapper">
+                    <select name="City" required>
+                        <option value="" disabled selected>Select your city *</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                </div>
+
+                <div class="input-group select-wrapper">
+                    <select name="LookingFor" required>
+                        <option value="" disabled selected>What describes your goal best? *</option>
+                        <option value="Friendship">Friendship</option>
+                        <option value="Professional Networking">Professional Networking</option>
+                        <option value="Career Opportunities">Career Opportunities</option>
+                        <option value="Mental Health Support">Mental Health Support</option>
+                    </select>
+                </div>
+
+                <!-- Social proof moved above button like in reference image -->
+                <div class="social-proof">
+                    <div class="avatars">
+                        <img src="https://i.pravatar.cc/40?img=1" alt="User">
+                        <img src="https://i.pravatar.cc/40?img=2" alt="User">
+                        <img src="https://i.pravatar.cc/40?img=3" alt="User">
+                        <img src="https://i.pravatar.cc/40?img=4" alt="User">
+                    </div>
+                    <span>100+ members joined</span>
+                </div>
+
+                <button type="button" id="submitBtn" class="btn" onclick="payNow()">
+                    <!-- WhatsApp/Telegram icon SVG inside button -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2L11 13"></path>
+                        <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+                    </svg>
+                    Get Instant Access &rarr;
+                </button>
+
+                <div class="secure-note">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Your data is safe. Complete anonymity.
+                </div>
+            </form>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="section">
+            <h2 class="serif-heading">What You'll Get</h2>
+
+            <div class="features">
+                <div class="feature">
+                    <!-- Lightning Icon -->
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <h3>Inclusive Careers</h3>
+                    <p>Access LGBTQ+ friendly companies, job openings, and freelance opportunities.</p>
+                </div>
+
+                <div class="feature">
+                    <!-- Book/Discussions Icon -->
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <h3>Safe Space Discussions</h3>
+                    <p>Talk openly about identity, mental health and life in India without judgment.</p>
+                </div>
+
+                <div class="feature">
+                    <!-- Calendar/Events Icon -->
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <h3>Verified Networking</h3>
+                    <p>Connect with queer professionals across tech, arts, law, healthcare and more.</p>
+                </div>
+
+                <div class="feature">
+                    <!-- Wrench/Tools Icon -->
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                        </path>
+                    </svg>
+                    <h3>Complete Anonymity</h3>
+                    <p>Your identity, real name, and phone number remain completely private.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="pricing-section">
+            <h2>Community Membership</h2>
+            <p style="color: #aaa; margin-top: 5px;">Support the safe space for</p>
+            <div class="price">₹199 <span
+                    style="font-size: 16px; color: #aaa; font-family: 'Inter', sans-serif; font-weight: 400;">/
+                    Month</span></div>
+        </div>
+
+        <footer>
+            Your privacy matters. No real names required.
+        </footer>
+
+    </div>
+
+    <script>
+        // Updated with your working /exec URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyBm_loy7CVfGRDjSbolFbnAMerzFrnfUGtzMWjHNtvMuTrZUF8g9t1XELTKOeSFRU5/exec';
+
+        function payNow() {
+            const form = document.getElementById('joinForm');
+            const email = document.getElementById('email').value;
+            const telegram = document.getElementById('telegram').value;
+            const btn = document.getElementById('submitBtn');
+
+            // Basic Validation
+            if (!email || !telegram) {
+                alert("Please fill your Email and Telegram Username before proceeding.");
+                return;
+            }
+
+            // 1. Button ko processing state mein change karein
+            const originalText = btn.innerHTML; // using innerHTML to preserve SVG icon
+            btn.innerHTML = "Processing...";
+            btn.disabled = true;
+
+            // 2. Data prepare karein (Google Sheets URLSearchParams format sabse accha accept karta hai)
+            const formData = new FormData(form);
+            const data = new URLSearchParams();
+            for (const pair of formData) {
+                data.append(pair[0], pair[1]);
+            }
+
+            // 3. SABSE PEHLE Data Google Sheet mein bhejein
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: data
+            })
+                .then(() => {
+                    // Data sheet par bhejte hi, Razorpay Payment Gateway open karein
+                    var options = {
+                        key: "YOUR_RAZORPAY_KEY",
+                        amount: 19900, // Amount is in currency subunits (199 * 100)
+                        currency: "INR",
+                        name: "Staying Ahead | Queer Community",
+                        description: "Monthly Membership",
+                        theme: { color: "#ccff00" }, // Match the theme color to neon green
+                        handler: function (response) {
+                            // Payment success hone par Telegram par bhejein
+                            alert("Payment Successful!");
+                            window.location.href = "https://t.me/YOUR_TELEGRAM_GROUP";
+                        },
+                        modal: {
+                            ondismiss: function () {
+                                // Agar user payment pop-up close kar de toh button wapas normal kar dein
+                                btn.innerHTML = originalText;
+                                btn.disabled = false;
+                            }
+                        }
+                    };
+
+                    var rzp = new Razorpay(options);
+
+                    // Agar payment fail ho jaye
+                    rzp.on('payment.failed', function (response) {
+                        alert("Payment Failed. Please try again.");
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    });
+
+                    rzp.open();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    // Error aane par bhi hum payment block nahi karenge
+                    alert("Proceeding to payment...");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+        }
+    </script>
+
+</body>
+
+</html>
